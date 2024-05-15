@@ -1,8 +1,8 @@
-FROM node:16
-COPY main /usr/home
+FROM node:alpine
+COPY main home
 
 EXPOSE 80
 
-RUN npm install ws
+RUN node install ws
 
 CMD ["node","bootleg_relay.js"]

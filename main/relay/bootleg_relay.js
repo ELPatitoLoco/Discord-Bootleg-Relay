@@ -25,15 +25,16 @@ function bridgemessage(message,channel,guild){
 
 
     if(message.author.id != client.info.user.id){
-        console.log(`(${minutesPassed}m) Message sent in ${channel.name}:  [${guild.name}] [#${channel.name}] ${message.author.username}: ${message.content} ${message.content.indexOf("<") - message.content.indexOf(">") }`)
+        console.log(`(${minutesPassed}m) Message sent in ${channel.name}:  [${guild.name}] [#${channel.name}] ${message.author.username}: ${message.content}`)
             
             if(message.content.slice(0,17) == "https://tenor.com"){
                 sendmessage(currentchannel[0],`\`\`${message.author.username}:\`\` [Tenor Embeded](${message.content})`,null);//Tenor Gif to Message 
             } 
                 else if(message.content.includes("<@",0) && message.content[message.content.indexOf("<") + 20] == ">" || message.content.includes("@everyone") || message.content.includes("@here") || message.content.includes("<@&")){
-                    sendmessage(currentchannel[1],"**You can't use mentions in a relayed message**",message.id) //If a member makes a mention it wont relay and instead warn the user
+                    /*sendmessage(currentchannel[1],"**You can't use mentions in a relayed message**",message.id) //If a member makes a mention it wont relay and instead warn the user
                                                                                                                 //This is not great and should be replaced by either not relaying the message at all
                                                                                                                 //Or just replacing the mentions wiht no text wich is a bit tideous but best practice
+                    */                                                                                            
                     console.warn("Warning: Supresing mention")
             }
                     else{
