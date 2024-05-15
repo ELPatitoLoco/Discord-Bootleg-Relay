@@ -1,6 +1,8 @@
 FROM node:16
-COPY DISCORD-BOOTLEG-RELAY /usr/home
+COPY main /usr/home
 
 EXPOSE 80
 
-CMD [ "node ","bootleg_relay.js"]
+RUN npm install ws
+
+CMD ["node","bootleg_relay.js"]
