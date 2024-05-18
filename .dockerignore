@@ -1,4 +1,5 @@
 examples/
-**/logo.png
-**/README.md
-**/.gitignore
+logo.png
+README.md
+.gitignore
+LICENSE

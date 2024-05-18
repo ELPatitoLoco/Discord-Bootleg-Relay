@@ -1,14 +1,26 @@
 const Discord = require("../src/exports.js");
-const client = new Discord.Client("Token goes here");
+const client = new Discord.Client(process.env.token);
 
 // Used to know how many minutes has passed
 const startDate = Date.now();
 
 //#######Config of the relay########
 
-const channel1 = "";
-const channel2 = "";
+const channel1 = process.env.channel1;
+const channel2 = process.env.channel2;
 
+
+if(process.env.token.length < 4){
+    console.log("Error!");
+    throw "Missing token";
+} 
+
+else if(channel1.length < 4 || channel2.length < 4){
+    console.log("Error!");
+    throw "Missing arguments on channel id";
+    
+
+}
 
 
 function sendmessage(channelid,content,reply){
@@ -48,6 +60,8 @@ function bridgemessage(message,channel,guild){
 
 client.on.ready = function () {
     console.log("Relay booted up!");
+    console.log(`Channel 1 was set to ${channel1}`)
+    console.log(`Channel 2 was set to ${channel2}`)
     sendmessage(channel1,"Bootleg relay started",null)
     sendmessage(channel2,"Bootleg relay started",null)
    
