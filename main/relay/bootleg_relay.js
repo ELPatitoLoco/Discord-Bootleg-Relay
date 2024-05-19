@@ -82,3 +82,28 @@ client.on.message_create = function (message) {
         
 };
 
+client.on.reply = function (message) {
+
+     // Get the guild and channel it was sent in
+     const guild = client.info.guilds.filter((guild) => guild.id == message.guild_id)[0];
+     const channel = guild.channels.filter((channel) => channel.id == message.channel_id)[0];
+ 
+     // Calculate the amount of minutes passed since this program started
+     const minutesPassed = ((Date.now() - startDate) / 1000 / 60).toFixed(2);
+ 
+     if(channel.id == channel1 || channel.id == channel2){
+         bridgemessage(message,channel,guild);
+     }    
+     
+};
+
+client.on.guild_member_update = function(message) {
+
+    if(message.communication_disabled_until != null & message.user.id == client.info.user.id){
+        console.log("The bot has been timed out")
+        console.log(message.communication_disabled_until);
+        sendemessage(channel1,"**The bot has been timed out in one of the channels**",null) //Send it in both channels so the bot doesn't need to check where it was timed out
+        sendemessage(channel2,"**The bot has been timed out in one of the channels**",null) //This a very bad and should be replaced in the future
+    }
+
+};
