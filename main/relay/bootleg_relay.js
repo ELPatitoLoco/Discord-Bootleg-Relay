@@ -9,7 +9,10 @@ const startDate = Date.now();
 const channel1 = process.env.channel1;
 const channel2 = process.env.channel2;
 
+const guild1 = "";
+const guild2 = "";
 
+//Argument errors
 if(process.env.token.length < 4){
     console.log("Error!");
     throw "Missing token";
@@ -23,6 +26,7 @@ else if(channel1.length < 4 || channel2.length < 4){
 }
 
 
+//Functions used to simplify the code
 function sendmessage(channelid,content,reply){
     client.send(channelid, {
         content: `${content}`,
@@ -42,12 +46,8 @@ function bridgemessage(message,channel,guild){
             if(message.content.slice(0,17) == "https://tenor.com"){
                 sendmessage(currentchannel[0],`\`\`${message.author.username}:\`\` [Tenor Embeded](${message.content})`,null);//Tenor Gif to Message 
             } 
-                else if(message.content.includes("<@",0) && message.content[message.content.indexOf("<") + 20] == ">" || message.content.includes("@everyone") || message.content.includes("@here") || message.content.includes("<@&")){
-                    /*sendmessage(currentchannel[1],"**You can't use mentions in a relayed message**",message.id) //If a member makes a mention it wont relay and instead warn the user
-                                                                                                                //This is not great and should be replaced by either not relaying the message at all
-                                                                                                                //Or just replacing the mentions wiht no text wich is a bit tideous but best practice
-                    */                                                                                            
-                    console.warn("Warning: Supresing mention")
+                else if(message.content.includes("<@",0) && message.content[message.content.indexOf("<") + 20] == ">" || message.content.includes("@everyone") || message.content.includes("@here") || message.content.includes("<@&")){                                                                                          
+                    console.warn("Warning: Supresing mention") //Mentions will not be bridged, if any does they wont work
             }
                     else{
                         sendmessage(currentchannel[0],`\`\`${message.author.username}:\`\` ${message.content}`,null); //Normal message
@@ -56,8 +56,7 @@ function bridgemessage(message,channel,guild){
 
 }
 
-
-
+//Discord events
 client.on.ready = function () {
     console.log("Relay booted up!");
     console.log(`Channel 1 was set to ${channel1}`)
@@ -98,12 +97,11 @@ client.on.reply = function (message) {
 };
 
 client.on.guild_member_update = function(message) {
-
     if(message.communication_disabled_until != null & message.user.id == client.info.user.id){
         console.log("The bot has been timed out")
         console.log(message.communication_disabled_until);
         sendemessage(channel1,"**The bot has been timed out in one of the channels**",null) //Send it in both channels so the bot doesn't need to check where it was timed out
-        sendemessage(channel2,"**The bot has been timed out in one of the channels**",null) //This a very bad and should be replaced in the future
+        sendemessage(channel2,"**The bot has been timed out in one of the channels**",null) //This is a very bad practice and should be replaced in the future
     }
 
 };
