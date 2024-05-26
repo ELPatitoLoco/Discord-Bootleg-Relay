@@ -6,6 +6,8 @@ COPY main/ /home/
 
 EXPOSE 80
 
+ENV guild1  = ""
+ENV guild2  = ""
 ENV channel1 = ""
 ENV channel2 = ""
 ENV token = ""
