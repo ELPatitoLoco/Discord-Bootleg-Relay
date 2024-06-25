@@ -31,6 +31,10 @@ else if (guild1.length < 4 || guild2.length < 4) {
 
 
 //Functions used to simplify the code
+function isPing(message){
+    return message.includes("@everyone") || message.includes("@here") || message.includes("<@")
+}
+
 function sendmessage(channelid, content, reply) {
     client.send(channelid, {
         content: `${content}`,
@@ -50,7 +54,7 @@ function bridgemessage(message, channel, guild) {
         if (message.content.slice(0, 17) == "https://tenor.com") {
             sendmessage(currentchannel[0], `\`\`${message.author.username}:\`\` [Tenor Embeded](${message.content})`, null);//Tenor Gif to Message 
         }
-        else if (message.content.includes("<@", 0) && message.content[message.content.indexOf("<") + 20] == ">" || message.content.includes("@everyone") || message.content.includes("@here") || message.content.includes("<@&")) {
+        else if (isPing(message.content)) {
             console.warn("Warning: Supresing mention"); //Mentions will not be bridged, if any does they wont work
         }
         else {
